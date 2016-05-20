@@ -20,7 +20,17 @@ $(function() {
     var frameX = (e.clientX - frameOffsetX - offset.left) > 0 ? '-' + (e.clientX - frameOffsetX - offset.left) + 'px' : ((e.clientX - frameOffsetX - offset.left) * -1) + 'px';
     var frameY = (e.clientY - frameOffsetY + scrollOffset - offset.top) > 0 ? '-' + (e.clientY - frameOffsetY + scrollOffset - offset.top) + 'px' : ((e.clientY - frameOffsetY + scrollOffset - offset.top) * -1) + 'px';
 
-    if (isInsideEl($('#me'), e.clientX - frameOffsetX, e.clientY - frameOffsetY) || isInsideEl($('#me'), e.clientX + frameOffsetX, e.clientY + frameOffsetY)) {
+    // console.log(frameOffsetX);
+
+    var topLeft = e.clientX - frameOffsetX;
+    var bottomLeft = e.clientX - frameOffsetX;
+
+    if (
+      isInsideEl($('#me'), e.clientX - frameOffsetX, e.clientY - frameOffsetY) ||
+      isInsideEl($('#me'), e.clientX + frameOffsetX, e.clientY - frameOffsetY) ||
+      isInsideEl($('#me'), e.clientX - frameOffsetX, e.clientY + frameOffsetY) ||
+      isInsideEl($('#me'), e.clientX + frameOffsetX, e.clientY + frameOffsetY))
+      {
       console.log('inside');
 
       // console.log(e.clientX, e.clientY);
@@ -35,6 +45,9 @@ $(function() {
 
 
     }else {
+      console.log('outside');
+      console.log(frameX,frameY );
+
       $('#frame')
         // .attr('style', '')
         .css({
@@ -55,6 +68,9 @@ function isInsideEl(el, x, y) {
   var validX = false;
   var validY = false;
   var _y = y + scrollOffset;
+
+  console.log(x, offset.left, maxWidth);
+  console.log(y, offset.top, maxHeight);
 
   if (x >= offset.left && x <= maxWidth) {
     validX = true;
