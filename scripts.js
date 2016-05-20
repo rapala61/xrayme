@@ -3,10 +3,11 @@ $(function() {
 
   var frameOffsetY = $('#frame').outerHeight() / 2;
   var frameOffsetX = $('#frame').outerWidth() / 2;
+  var frameBorderFactor = 5;
 
   $(document).on('mousemove', function(e) {
-    var xPos = (e.clientX - frameOffsetX) + 'px';
-    var yPos = (e.clientY - frameOffsetY) + 'px';
+    var xPos = (e.clientX - frameOffsetX - frameBorderFactor) + 'px';
+    var yPos = (e.clientY - frameOffsetY - frameBorderFactor) + 'px';
     var scrollOffset = $(window).scrollTop();
     var offset = $('#me').offset();
 
