@@ -57,6 +57,9 @@ $(function() {
   });
 
 
+  // $(document).trigger('mousemove');
+
+
 
 });
 

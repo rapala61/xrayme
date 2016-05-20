@@ -1,19 +1,27 @@
+@import url(https://fonts.googleapis.com/css?family=Orbitron:400,500);
+
 body {
   margin: 0;
   box-sizing: border-box;
+  background-color: #0E2F44;
+  font-family: 'Orbitron', Arial, serif, sans-serif;
 }
-
+#xray {
+  text-align: center;
+}
 #me {
   height: 400px;
-}
-#rx {
-  /*height: 400px;*/
+  box-shadow: 3px 5px 15px 0 black;
 }
 #frame {
+  cursor: none;
   border-radius: 60px;
   position: absolute;
   height: 100px;
-  width: 100px;
-  background-color: white;
+  width: 130px;
   border: 5px solid darkgrey;
+}
+footer {
+  text-align: center;
+  color: white;
 }
