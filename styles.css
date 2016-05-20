@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+}
+
+#me {
+  height: 400px;
+}
+#rx {
+  /*height: 400px;*/
+}
+#frame {
+  border-radius: 60px;
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  background-color: black;
+}
