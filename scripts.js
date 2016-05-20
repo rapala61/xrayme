@@ -16,17 +16,19 @@ $(function() {
       left: xPos
     })
 
-    var frameX = (e.clientX - frameOffsetX - offset.left) > 0 ? '-' + (e.clientX - frameOffsetX - offset.left) + 'px' : (e.clientX - frameOffsetX - offset.left) + 'px';
-    var frameY = (e.clientY - frameOffsetY + scrollOffset - offset.top) > 0 ? '-' + (e.clientY - frameOffsetY + scrollOffset - offset.top) + 'px' : (e.clientY - frameOffsetY + scrollOffset - offset.top) + 'px';
+    var frameX = (e.clientX - frameOffsetX - offset.left) > 0 ? '-' + (e.clientX - frameOffsetX - offset.left) + 'px' : ((e.clientX - frameOffsetX - offset.left) * -1) + 'px';
+    var frameY = (e.clientY - frameOffsetY + scrollOffset - offset.top) > 0 ? '-' + (e.clientY - frameOffsetY + scrollOffset - offset.top) + 'px' : ((e.clientY - frameOffsetY + scrollOffset - offset.top) * -1) + 'px';
 
     if (isInsideEl($('#me'), e.clientX - frameOffsetX, e.clientY - frameOffsetY) || isInsideEl($('#me'), e.clientX + frameOffsetX, e.clientY + frameOffsetY)) {
       console.log('inside');
 
-      console.log(e.clientX, e.clientY);
-      console.log('url("images/me-rx.png") ' + frameX + ' '+ frameY + ' / 300px 400px');
+      // console.log(e.clientX, e.clientY);
+      // console.log('url("images/me-rx.png") ' + frameX + ' '+ frameY + ' / 300px 400px');
+
+      console.log(frameX,frameY );
 
       $('#frame').css({
-        'background': 'url("images/me-rx.png") -' + (e.clientX - frameOffsetX)+'px -'+ ((e.clientY - frameOffsetY) + scrollOffset) + 'px / 300px 400px',
+        'background': 'url("images/me-rx.png") ' + frameX + ' ' + frameY + ' / 300px 400px',
         'background-repeat': 'no-repeat'
       })
 
