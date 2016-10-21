@@ -11,6 +11,21 @@ class Frame {
     return center;
   }
 
+  getCorners() {
+    const offset = this.$el.offset();
+    const corners = [
+      { x: offset.left,
+        y: offset.top },
+      { x: offset.left + this.$el.outerWidth(true),
+        y: offset.top },
+      { x: offset.left,
+        y: offset.top + this.$el.outerHeight(true) },
+      { x: offset.left + this.$el.outerWidth(true),
+        y: offset.top + this.$el.outerHeight(true) }
+    ];
+    return corners;
+  }
+
   syncWithCoords(x, y) {
     const newX = `${x - this.centerOffset.x}px`;
     const newY = `${y - this.centerOffset.y}px`;

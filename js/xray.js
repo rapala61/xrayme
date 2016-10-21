@@ -1,3 +1,5 @@
+/* global window, Xray, Effect */
+
 class Xray extends Effect {
   constructor(frame, picture, picUrl) {
     super(frame, picture);
@@ -7,10 +9,10 @@ class Xray extends Effect {
 
   update(mouseX, mouseY) {
     this.frame.syncWithCoords(mouseX, mouseY);
-    const bgPosition = this.getBackgroundPosition(mouseX, mouseY);
-    const isInsidePic = this.isFrameOverPic(mouseX, mouseY);
+    const isInsidePic = this.isFrameOverPic();
 
     if (isInsidePic) {
+      const bgPosition = this.getBackgroundPosition(mouseX, mouseY);
       this.updateFrameBGPosition(bgPosition.x, bgPosition.y);
     } else {
       this.frame.getEl().css({
@@ -38,14 +40,8 @@ class Xray extends Effect {
     return validX && validY;
   }
 
-  isFrameOverPic(mouseX, mouseY) {
-    const centerOffset = this.frame.getCenterOffset();
-    const corners = [
-      { x: mouseX - centerOffset.x, y: mouseY - centerOffset.y },
-      { x: mouseX + centerOffset.x, y: mouseY - centerOffset.y },
-      { x: mouseX - centerOffset.x, y: mouseY + centerOffset.y },
-      { x: mouseX + centerOffset.x, y: mouseY + centerOffset.y }
-    ];
+  isFrameOverPic() {
+    const corners = this.frame.getCorners();
 
     let results = 0;
     for (let i = 0; i < corners.length; i += 1) {
@@ -57,6 +53,7 @@ class Xray extends Effect {
     return !!results;
   }
 
+  // TODO: This function should be refactored
   getBackgroundPosition(mouseX, mouseY) {
     const scrollTop = $(window).scrollTop();
     let xPos = mouseX - this.frame.getCenterOffset().x - this.picture.getOffset().left;
