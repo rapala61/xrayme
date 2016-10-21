@@ -1,8 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Orbitron:400,500);
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  box-sizing: border-box;
   background-color: #0E2F44;
   font-family: 'Orbitron', Arial, serif, sans-serif;
 }
