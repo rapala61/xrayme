@@ -1,14 +1,30 @@
+/**
+ * Encapsulates state and features specific to the frame element in the page
+ * The frame is synchronizable based on (x, y) coordinates.
+ */
 class Frame {
   constructor(selector) {
     this.$el = $(selector);
-    this.centerOffset = this.getCenterOffset();
+    this.frameCenter = this.getFrameCenter();
   }
 
-  getCenterOffset() {
+  /**
+   * getFrameCenter
+   *
+   * @returns {type} Description
+   */
+  getFrameCenter() {
     const center = {};
     center.y = this.$el.outerHeight(true) / 2;
     center.x = this.$el.outerWidth(true) / 2;
     return center;
+  }
+
+  getCursorOffset(mouseX, mouseY) {
+    const cursorOffset = {};
+    cursorOffset.x = mouseX - this.frameCenter.x;
+    cursorOffset.y = mouseY - this.frameCenter.y;
+    return cursorOffset;
   }
 
   getCorners() {
@@ -27,13 +43,15 @@ class Frame {
   }
 
   syncWithCoords(x, y) {
-    const newX = `${x - this.centerOffset.x}px`;
-    const newY = `${y - this.centerOffset.y}px`;
-    // console.log(newY, newY);
-    this.$el.css({
-      top: newY,
-      left: newX
+    const cursorOffset = this.getCursorOffset(x, y);
+    return this.updateCss({
+      top: cursorOffset.y,
+      left: cursorOffset.x
     });
+  }
+
+  updateCss(options) {
+    return this.$el.css(options || {});
   }
 
   getEl() {

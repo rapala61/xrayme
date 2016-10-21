@@ -1,19 +1,48 @@
 /* global window, Xray, Effect */
 
+
+/**
+ * Xray - Reveals a second image in the frame as
+ *        the use hovers over the picture.
+ * @extends Effect
+ */
 class Xray extends Effect {
-  constructor(frame, picture, picUrl) {
+
+  /**
+   * constructor - Description
+   *
+   * @param {class}   frame       The frame instance
+   * @param {class}   picture     The picture instance
+   * @param {object} [options={}] xrayPicWidth and xrayPicHeight.
+   *                              They should match the picture's image size
+   */
+  constructor(frame, picture, options = {}) {
     super(frame, picture);
-    this.picUrl = picUrl;
     this.name = 'xray';
+    this.opts = {
+      xrayPicUrl: options.xrayPicUrl || '',
+      xrayPicWidth: options.xrayPicWidth || '100',
+      xrayPicHeight: options.xrayPicHeight || '100'
+    };
   }
 
+
+  /**
+   * update - It moves the frame to the (x,y) coordinates of the pointer.
+   *          It also checks if there is collition and updates the frame's
+   *          background picture and position.
+   *
+   * @param {number} mouseX
+   * @param {number} mouseY
+   *
+   */
   update(mouseX, mouseY) {
     this.frame.syncWithCoords(mouseX, mouseY);
-    const isInsidePic = this.isFrameOverPic();
+    const colliding = this.detectFrameCollition();
 
-    if (isInsidePic) {
-      const bgPosition = this.getBackgroundPosition(mouseX, mouseY);
-      this.updateFrameBGPosition(bgPosition.x, bgPosition.y);
+    if (colliding) {
+      const xrayBGCoords = this.getXrayBGCoords(mouseX, mouseY);
+      this.updateFrameBGPosition(xrayBGCoords.x, xrayBGCoords.y);
     } else {
       this.frame.getEl().css({
         background: ''
@@ -21,6 +50,15 @@ class Xray extends Effect {
     }
   }
 
+
+  /**
+   * isPointOverPic - Checks and specific (x,y) for collition with the picture.
+   *
+   * @param {number} mouseX
+   * @param {number} mouseY
+   *
+   * @returns {boolean} True if both (x,y) are colliding
+   */
   isPointOverPic(mouseX, mouseY) {
     const offset = this.picture.getOffset();
     const scrollOffset = $(window).scrollTop();
@@ -40,24 +78,42 @@ class Xray extends Effect {
     return validX && validY;
   }
 
-  isFrameOverPic() {
+
+  /**
+   * detectFrameCollition - Gets all 4 corners of the frame and detects if any
+   *                        of them has collided
+   *
+   * @returns {boolean} True if any corner has collided
+   */
+  detectFrameCollition() {
     const corners = this.frame.getCorners();
 
-    let results = 0;
+    let numOfCollitions = 0;
     for (let i = 0; i < corners.length; i += 1) {
       if (this.isPointOverPic(corners[i].x, corners[i].y)) {
-        results += 1;
+        numOfCollitions += 1;
       }
     }
 
-    return !!results;
+    return !!numOfCollitions;
   }
 
-  // TODO: This function should be refactored
-  getBackgroundPosition(mouseX, mouseY) {
+
+
+  /**
+   * getXrayBGCoords - Computes the x position and the y position of the
+   *                   background image that will be shown in the frame
+   *
+   * @param {number} mouseX
+   * @param {number} mouseY
+   *
+   * @returns {Object} The object with the x and y position coordinates
+   *                   of the background image
+   */
+  getXrayBGCoords(mouseX, mouseY) {
     const scrollTop = $(window).scrollTop();
-    let xPos = mouseX - this.frame.getCenterOffset().x - this.picture.getOffset().left;
-    let yPos = mouseY - this.frame.getCenterOffset().y - this.picture.getOffset().top + scrollTop;
+    let xPos = mouseX - this.frame.getFrameCenter().x - this.picture.getOffset().left;
+    let yPos = mouseY - this.frame.getFrameCenter().y - this.picture.getOffset().top + scrollTop;
 
     // Make sure that the backgroiund position fits the movement as
     // the mouse moves.
@@ -76,9 +132,20 @@ class Xray extends Effect {
     return { x: xPos, y: yPos };
   }
 
+
+  /**
+   * updateFrameBGPosition - Updates the frame's background image with the
+   *                         provided x and y coordinates.
+   *
+   * @param {number} xPos
+   * @param {number} yPos
+   *
+   * @returns {object} The frames jQuery element
+   */
   updateFrameBGPosition(xPos, yPos) {
-    this.frame.getEl().css({
-      background: `url(${this.picUrl}) ${xPos} ${yPos} / 300px 400px`,
+    return this.frame.updateCss({
+      background: `url(${this.opts.xrayPicUrl}) ${xPos} ${yPos} /
+        ${this.opts.xrayPicWidth}px ${this.opts.xrayPicHeight}px`,
       'background-repeat': 'no-repeat'
     });
   }
