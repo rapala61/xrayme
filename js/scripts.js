@@ -1,4 +1,4 @@
-/* global document, _, Frame, Picture, Xray */
+/* global document, window, _, Frame, Picture, Xray */
 
 const frame = new Frame('#frame');
 const picture = new Picture('#me');
@@ -36,6 +36,11 @@ const onMouseMove = _.throttle((e) => {
     xray.update(e.clientX, e.clientY);
   }
 }, 10);
-$(document).on('mousemove', onMouseMove);
+
+if (window.isMobile) {
+  $(document).on('click', onMouseMove);
+} else {
+  $(document).on('mousemove', onMouseMove);
+}
 
 // Github Ribbon
