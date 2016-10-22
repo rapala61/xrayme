@@ -112,8 +112,13 @@ class Xray extends Effect {
    */
   getXrayBGCoords(mouseX, mouseY) {
     const scrollTop = $(window).scrollTop();
-    let xPos = mouseX - this.frame.getFrameCenter().x - this.picture.getOffset().left;
-    let yPos = mouseY - this.frame.getFrameCenter().y - this.picture.getOffset().top + scrollTop;
+    const frameCenterX = this.frame.getFrameCenter().x;
+    const frameCenterY = this.frame.getFrameCenter().y;
+    const picX = this.picture.getOffset().left;
+    const picY = this.picture.getOffset().top;
+    const borderOffset = parseInt(this.frame.getEl().css('borderWidth'), 10);
+    let xPos = (mouseX - frameCenterX - picX) + borderOffset;
+    let yPos = (mouseY - frameCenterY - picY) + scrollTop + borderOffset;
 
     // Make sure that the backgroiund position fits the movement as
     // the mouse moves.
