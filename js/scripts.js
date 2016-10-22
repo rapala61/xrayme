@@ -8,7 +8,34 @@ const xray = new Xray(frame, picture, {
   xrayPicHeight: 400
 });
 
+const githubRibbon = (e) => {
+  const ribbonImg = $('.gh-ribbon');
+  const ghRibbonOffset = ribbonImg.offset();
+  const ghRibbonHeight = ribbonImg.outerHeight() + ghRibbonOffset.top;
+  const frameCenter = frame.getFrameCenter();
+  const rightCornerX = e.clientX + frameCenter.x;
+  const rightCornerY = e.clientY - frameCenter.y;
+  let active = false;
+
+  if (rightCornerX > ghRibbonOffset.left && rightCornerY < ghRibbonHeight) {
+    active = true;
+    frame.updateCss({
+      display: 'none'
+    });
+  } else {
+    frame.updateCss({
+      display: 'block'
+    });
+  }
+  return active;
+};
+
 const onMouseMove = _.throttle((e) => {
-  xray.update(e.clientX, e.clientY);
+  const activeGithubRibbon = githubRibbon(e);
+  if (!activeGithubRibbon) {
+    xray.update(e.clientX, e.clientY);
+  }
 }, 10);
 $(document).on('mousemove', onMouseMove);
+
+// Github Ribbon
