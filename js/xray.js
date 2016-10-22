@@ -12,16 +12,13 @@ class Xray extends Effect {
    *
    * @param {class}   frame       The frame instance
    * @param {class}   picture     The picture instance
-   * @param {object} [options={}] xrayPicWidth and xrayPicHeight.
-   *                              They should match the picture's image size
+   * @param {object} [options={}] xrayPicUrl
    */
   constructor(frame, picture, options = {}) {
     super(frame, picture);
     this.name = 'xray';
     this.opts = {
-      xrayPicUrl: options.xrayPicUrl || '',
-      xrayPicWidth: options.xrayPicWidth || '100',
-      xrayPicHeight: options.xrayPicHeight || '100'
+      xrayPicUrl: options.xrayPicUrl || ''
     };
   }
 
@@ -147,7 +144,7 @@ class Xray extends Effect {
   updateFrameBGPosition(xPos, yPos) {
     return this.frame.updateCss({
       background: `url(${this.opts.xrayPicUrl}) ${xPos} ${yPos} /
-        ${this.opts.xrayPicWidth}px ${this.opts.xrayPicHeight}px`,
+        ${this.picture.getEl().outerWidth()}px ${this.picture.getEl().outerHeight()}px`,
       'background-repeat': 'no-repeat'
     });
   }

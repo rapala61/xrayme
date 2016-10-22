@@ -13,7 +13,7 @@ body {
   background-color: #0E2F44;
   font-family: 'Orbitron', Arial, serif, sans-serif;
   position: relative;
-  height: 100%;
+  height: 600px;
 }
 #xray {
   text-align: center;
@@ -57,15 +57,21 @@ footer img {
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
 
+    #me {
+      height: 300px;
+      box-shadow: 3px 5px 15px 0 black;
+      margin-top: 20px;
+    }
+
 
     footer {
-      margin-top: 25px;
+      margin-top: 10px;
       text-align: center;
       position: absolute;
       left: 0;
       right: 0;
       bottom: 0;
-      height: 50px;
+      height: 40px;
     }
 
     footer img {
