@@ -1,6 +1,5 @@
 /* global window, Xray, Effect */
 
-
 /**
  * Xray - Reveals a second image in the frame as
  *        the use hovers over the picture.
@@ -97,8 +96,6 @@ class Xray extends Effect {
 
     return !!numOfCollitions;
   }
-
-
 
   /**
    * getXrayBGCoords - Computes the x position and the y position of the
