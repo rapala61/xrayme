@@ -16,7 +16,11 @@ Initially, I brute forced my way into making it work. Later, I refactored it and
 - jQuery
 - Underscore.js
 
+## Known Issues
+- **Not mobile friendly**
+
 ## Future
+- Mobile First
 - BDD Testing
 - Different versions (branches):
   - React.js

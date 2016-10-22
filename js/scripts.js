@@ -6,7 +6,6 @@ const xray = new Xray(frame, picture, {
   xrayPicUrl: 'images/me-rx.png'
 });
 
-// Github Ribbon
 const githubRibbon = (e) => {
   const ribbonImg = $('.gh-ribbon');
   const ghRibbonOffset = ribbonImg.offset();
@@ -29,6 +28,11 @@ const githubRibbon = (e) => {
   return active;
 };
 
+const onTouch = (e) => {
+  const touchCoords = e.originalEvent.touches[0];
+  xray.update(touchCoords.clientX, touchCoords.clientY);
+};
+
 const onMouseMove = _.throttle((e) => {
   const activeGithubRibbon = githubRibbon(e);
   if (!activeGithubRibbon) {
@@ -36,5 +40,10 @@ const onMouseMove = _.throttle((e) => {
   }
 }, 10);
 
+if (window.isMobile) {
+  $(document).on('touchstart', onTouch);
+} else {
+  $(document).on('mousemove', onMouseMove);
+}
 
-$(document).on('mousemove', onMouseMove);
+// Github Ribbon
