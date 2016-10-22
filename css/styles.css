@@ -49,3 +49,28 @@ footer {
 footer img {
   opacity: 0.5;
 }
+
+/* iPhone 6 */
+/* Portrait and Landscape */
+@media only screen
+  and (min-device-width: 375px)
+  and (max-device-width: 667px)
+  and (-webkit-min-device-pixel-ratio: 2) {
+
+
+    footer {
+      margin-top: 25px;
+      text-align: center;
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 50px;
+    }
+
+    footer img {
+      height: 50px;
+      opacity: 0.5;
+    }
+
+}
