@@ -33,7 +33,14 @@ class Xray extends Effect {
    *
    */
   update(mouseX, mouseY) {
-    this.frame.syncWithCoords(mouseX, mouseY);
+    /**
+     * We must move the frame to the new pointer position, offsetted by frames center offsets
+     */
+    const y = mouseY - this.frame.frameCenterOffsets.y;
+    const x = mouseX - this.frame.frameCenterOffsets.x;
+
+    // move the frame to x, y coordinates
+    this.frame.moveTo(x, y);
     const colliding = this.detectFrameCollition();
 
     if (colliding) {
@@ -106,13 +113,13 @@ class Xray extends Effect {
    */
   getXrayBGCoords(mouseX, mouseY) {
     const scrollTop = $(window).scrollTop();
-    const frameCenterX = this.frame.getFrameCenter().x;
-    const frameCenterY = this.frame.getFrameCenter().y;
+    const frameCenterOffsetX = this.frame.getFrameCenterOffsets().x;
+    const frameCenterOffsetY = this.frame.getFrameCenterOffsets().y;
     const picX = this.picture.getOffset().left;
     const picY = this.picture.getOffset().top;
     const borderOffset = parseInt(this.frame.getEl().css('borderWidth'), 10);
-    let xPos = (mouseX - frameCenterX - picX) + borderOffset;
-    let yPos = (mouseY - frameCenterY - picY) + scrollTop + borderOffset;
+    let xPos = (mouseX - frameCenterOffsetX - picX) + borderOffset;
+    let yPos = (mouseY - frameCenterOffsetY - picY) + scrollTop + borderOffset;
 
     // Make sure that the backgroiund position fits the movement as
     // the mouse moves.

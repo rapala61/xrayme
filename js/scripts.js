@@ -6,11 +6,12 @@ const xray = new Xray(frame, picture, {
   xrayPicUrl: 'images/me-rx.png'
 });
 
+// Github Ribbon
 const githubRibbon = (e) => {
   const ribbonImg = $('.gh-ribbon');
   const ghRibbonOffset = ribbonImg.offset();
   const ghRibbonHeight = ribbonImg.outerHeight() + ghRibbonOffset.top;
-  const frameCenter = frame.getFrameCenter();
+  const frameCenter = frame.getFrameCenterOffsets();
   const rightCornerX = e.clientX + frameCenter.x;
   const rightCornerY = e.clientY - frameCenter.y;
   let active = false;
@@ -45,5 +46,3 @@ if (window.isMobile) {
 } else {
   $(document).on('mousemove', onMouseMove);
 }
-
-// Github Ribbon
