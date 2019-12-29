@@ -15,6 +15,7 @@ Initially, I brute forced my way into making it work. Later, I refactored it and
 - JavaScript ES6
 - jQuery
 - Underscore.js
+- Deployed using [Netlify](https://www.netlify.com/)
 
 ## Known Issues
 - **Not mobile friendly**
